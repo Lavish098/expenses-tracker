@@ -37,7 +37,7 @@ onMounted(() => {
 
 const transactions = ref([]);
 
-const showBtn = ref(true)
+const showBtn = ref(false)
 
 const showTransactionForm = () => {
   showBtn.value = !showBtn.value

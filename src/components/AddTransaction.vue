@@ -74,6 +74,44 @@ const onSubmit = () => {
 <style scoped>
 .addTransaction {
   top: 0;
+  margin-left: -52px;
+  position: fixed;
+  z-index: 101;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+.form-container {
+  width: 90%;
+  border-radius: 20px;
+  padding: 5px 20px;
+  background-color: whitesmoke;
+}
+h3{
+  font-size: 18px;
+}
+.close-btn{
+  position: absolute;
+  right: 50px;
+  margin-top: 15px;
+  font-size: 20px;
+}
+.close-btn button {
+  background-color: whitesmoke;
+  cursor: pointer;
+  color: #9c88ff;
+  border: 0;
+  display: block;
+  font-size: 20px;
+  padding: 10px;
+}
+@media screen and (min-width: 600px) {
+  .addTransaction {
+  top: 0;
   margin-left: -40px;
   position: fixed;
   z-index: 101;
@@ -91,19 +129,8 @@ const onSubmit = () => {
   padding: 5px 50px;
   background-color: whitesmoke;
 }
-.close-btn{
-  position: absolute;
-  right: 50px;
-  margin-top: 15px;
-  font-size: 20px;
+h3{
+  font-size: 25px;
 }
-.close-btn button {
-  background-color: whitesmoke;
-  cursor: pointer;
-  color: #9c88ff;
-  border: 0;
-  display: block;
-  font-size: 20px;
-  padding: 10px;
 }
 </style>
