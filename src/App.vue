@@ -8,7 +8,8 @@
         :transactions="transactions"
         @transactionDeleted="handleTransactionDeleted"
       />
-      <AddTransaction @transactionSubmitted="handleTransactionSubmitted" />
+      <AddTransaction @transactionSubmitted="handleTransactionSubmitted" @close="close" v-if="showBtn"/>
+      <AddTransactionsBtn @click="showTransactionForm"/>
     </div>
   </div>
 </template>
@@ -19,6 +20,7 @@ import Balance from "./components/Balance.vue";
 import IncomeExpenses from "./components/IncomeExpenses.vue";
 import TransactionList from "./components/TransactionList.vue";
 import AddTransaction from "./components/AddTransaction.vue";
+import AddTransactionsBtn from "./components/AddTransactionsBtn.vue"
 
 import { ref, computed, onMounted } from "vue";
 import { useToast } from "vue-toastification";
@@ -34,6 +36,12 @@ onMounted(() => {
 });
 
 const transactions = ref([]);
+
+const showBtn = ref(true)
+
+const showTransactionForm = () => {
+  showBtn.value = !showBtn.value
+}
 
 
 //get total
@@ -70,21 +78,18 @@ const expense = computed(() => {
 });
 
 //add transaction
+const close = () => {
+      showBtn.value = !showBtn.value
+
+}
 const handleTransactionSubmitted = (transactionData) => {
-  // const incomeExpense = ref('')  
-  // if(transactionData.incomeExpense == 'expense'){
-  //   incomeExpense.value = '-' + transactionData.amount
-  // }else{
-  //   incomeExpense.value = transactionData.amount
-  // }
-    console.log(transactionData);
   transactions.value.push({
     id: generateUniqueId(),
     text: transactionData.text,
     amount: transactionData.amount,
     incomeExpense: transactionData.incomeExpense
   });
-  console.log(transactions.value);
+    showBtn.value = !showBtn.value
   
   saveTransaction();
 

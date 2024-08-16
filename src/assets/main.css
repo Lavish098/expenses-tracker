@@ -22,12 +22,44 @@ body {
 
 .container {
   margin: 30px auto;
-  width: 400px;
+  width: 100%;
+}
+@media screen and (min-width: 600px) {
+  .container {
+    margin: 30px auto;
+    width: 400px;
+  }
+  h1 {
+    letter-spacing: 1px;
+    margin: 0;
+  }
+  h4 {
+    margin: 0;
+    text-transform: uppercase;
+  }
+  .inc-exp-container {
+    background-color: #fff;
+    box-shadow: var(--box-shadow);
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+  }
+  
+  .inc-exp-container > div {
+    flex: 1;
+    text-align: center;
+  }
+  
+  .inc-exp-container > div:first-of-type {
+    border-right: 1px solid #dedede;
+  }
 }
 
 h1 {
   letter-spacing: 1px;
   margin: 0;
+  font-size: 25px;
 }
 
 h3 {
@@ -39,6 +71,7 @@ h3 {
 h4 {
   margin: 0;
   text-transform: uppercase;
+  font-size: 15px;
 }
 
 .inc-exp-container {
@@ -48,6 +81,9 @@ h4 {
   display: flex;
   justify-content: space-between;
   margin: 20px 0;
+}
+.inc-exp-container p {
+  font-size: 15px;
 }
 
 .inc-exp-container > div {
@@ -81,11 +117,12 @@ label {
 input[type="text"],
 input[type="number"] {
   border: 1px solid #dedede;
-  border-radius: 2px;
+  border-radius: 6px;
   display: block;
   font-size: 16px;
   padding: 10px;
   width: 100%;
+  outline: none;
 }
 #incomeExpense {
   border: 1px solid #dedede;
@@ -147,7 +184,7 @@ input[type="number"] {
   color: #fff;
   font-size: 20px;
   line-height: 20px;
-  padding: 2px 5px;
+  padding: 10px;
   position: absolute;
   top: 50%;
   left: 0;
