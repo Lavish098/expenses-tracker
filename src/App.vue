@@ -2,8 +2,7 @@
   <div>
     <Header />
     <div class="container">
-      <Balance :total="+total" />
-      <IncomeExpenses :income="+income" :expense="+expense" />
+      <Balance :transactions="transactions" />
       <TransactionList
         :transactions="transactions"
         @transactionDeleted="handleTransactionDeleted"
@@ -15,9 +14,10 @@
 </template>
 
 <script setup>
+import '../fontawesome-free-5.15.1-web/css/all.css'
+
 import Header from "./components/Header.vue";
 import Balance from "./components/Balance.vue";
-import IncomeExpenses from "./components/IncomeExpenses.vue";
 import TransactionList from "./components/TransactionList.vue";
 import AddTransaction from "./components/AddTransaction.vue";
 import AddTransactionsBtn from "./components/AddTransactionsBtn.vue"
@@ -44,38 +44,7 @@ const showTransactionForm = () => {
 }
 
 
-//get total
-const total = computed(() => {
-  const income = transactions.value
-    .filter((transaction) => transaction.incomeExpense == 'income')
-    .reduce((acc, transaction) => acc + transaction.amount, 0);
 
-  const expense = transactions.value
-    .filter((transaction) => transaction.incomeExpense == 'expense')
-    .reduce((acc, transaction) => acc + transaction.amount, 0);
-
-  return (income - expense).toFixed(2);
-});
-
-
-//Get income
-const income = computed(() => {
-  return transactions.value
-    .filter((transaction) => transaction.incomeExpense == 'income')
-    .reduce((acc, transaction) => {
-      return acc + transaction.amount;
-    }, 0)
-    .toFixed(2);
-});
-//Get expense
-const expense = computed(() => {
-  return transactions.value
-    .filter((transaction) => transaction.incomeExpense == 'expense')
-    .reduce((acc, transaction) => {
-      return acc + transaction.amount;
-    }, 0)
-    .toFixed(2);
-});
 
 //add transaction
 const close = () => {

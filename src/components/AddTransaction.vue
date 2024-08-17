@@ -74,7 +74,7 @@ const onSubmit = () => {
 <style scoped>
 .addTransaction {
   top: 0;
-  margin-left: -52px;
+  margin-left: -80px;
   position: fixed;
   z-index: 101;
   min-height: 100vh;
@@ -84,6 +84,11 @@ const onSubmit = () => {
   justify-content: center;
   align-items: center;
   background-color: rgba(0, 0, 0, 0.4);
+}
+@media screen and (min-width: 425px) {
+  .addTransaction {
+  margin-left: -110px;
+}
 }
 .form-container {
   width: 90%;
