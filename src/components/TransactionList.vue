@@ -1,14 +1,14 @@
 <template>
 <div class="transaction-container">
-  <h3>Latest transaction</h3>
+  <h3>Latest Transactions</h3>
   <ul id="list" class="list">
     <li
       class="plus"
       v-for="transaction in transactions"
       :key="transaction.id"
-      :class="transaction.incomeExpense == 'expense' ? 'minus' : 'plus'"
+      
     >
-      {{ transaction.text }} <span>${{ transaction.amount.toLocaleString() }}</span
+      <h2>{{ transaction.text }}</h2> <span :class="transaction.incomeExpense == 'expense' ? 'minus' : 'plus'">${{ transaction.amount.toLocaleString() }}</span
       >
       <!-- <button @click="deleteTransaction(transaction.id)" class="delete-btn">x</button> -->
     </li>
@@ -34,12 +34,16 @@ emit('transactionDeleted', id)
 </script>
 <style scoped>
 .transaction-container{
-  margin: 10px;
+  margin: 60px 20px;
 }
 h3{
-  padding: 0 0 25px 20px;
+  padding: 0 0 0px 20px;
   letter-spacing: 1px;
-    border-bottom: 2px solid #e4e1e1;
+  color: #183856;
+}
+h2{
+  font-size: 20px;
+  margin: 0;
 }
 .btn {
   cursor: pointer;
@@ -66,23 +70,27 @@ h3{
 }
 
 .list li {
-  background-color: #fff;
-  box-shadow: var(--box-shadow);
+    box-shadow: 0 5px 50px 0 rgb(0 0 0 / 0.05);
   color: #333;
+  height: 80px;
   display: flex;
   justify-content: space-between;
   position: relative;
-  padding: 20px 10px;
-  margin: 20px 0;
-  border-radius: 20px;
+  padding: 15px 10px;
+  margin: 10px 0;
+  border-radius: 10px;
 }
 
-.list li.plus {
-  border-right: 10px solid #2ecc71;
+.list li>span.plus {
+  color: #2ecc71;
+  font-weight: 700;
+  letter-spacing: 1px;
 }
 
-.list li.minus {
-  border-right: 10px solid #c0392b;
+.list li>span.minus {
+  color: #fd1900;
+    font-weight: 700;
+  letter-spacing: 1px;
 }
 
 .delete-btn {

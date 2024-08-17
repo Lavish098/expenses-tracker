@@ -9,7 +9,7 @@
 }
 
 body {
-  background-color: #f7f7f7;
+  background-color: #ffffff;
   /* min-height: 100vh; */
   width: 100%;
   margin: 0;
@@ -73,13 +73,7 @@ h4 {
   margin: 5px 0;
 }
 
-.money.plus {
-  color: #2ecc71;
-}
 
-.money.minus {
-  color: #c0392b;
-}
 
 label {
   display: inline-block;

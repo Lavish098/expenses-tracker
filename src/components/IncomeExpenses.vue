@@ -45,6 +45,7 @@ const props = defineProps({
   display: flex;
   margin: 30px 0;
     justify-content: space-between;
+    width: 100%;
 
 }
 .inc-exp-container p {
@@ -53,6 +54,7 @@ const props = defineProps({
 .income-container {
   display: block;
   width: 50%;
+  margin-right: 60px;
 }
 h4{
   font-size: 15px;
@@ -60,9 +62,9 @@ h4{
   color: rgb(190, 188, 188);
 }
 .income-container i {
-  background-color: #88a6b8;
+  background-color: rgba(136, 166, 184, 0.4);
   padding: 5px;
-  border-radius: 70px;
+  border-radius: 16px;
   height: 30px;
   color: #ffffff;
   font-size: 20px;
@@ -72,20 +74,32 @@ h4{
 }
 .income{
   display: flex;
+  align-items: center;
 }
 .expense-container {
  display: block;
   width: 50%;
 }
 .expense-container i {
-  background-color: #88a6b8;
+  background-color: rgba(136, 166, 184, 0.4);
   padding: 5px;
-  border-radius: 70px;
+  border-radius: 17px;
   height: 30px;
   color: #ffffff;
   font-size: 20px;
 }
 .expense{
   display: flex;
+  align-items: center;
+}
+.expense-container p{
+  font-size: 20px;
+}
+.money.plus {
+  color: rgb(190, 188, 188);
+}
+
+.money.minus {
+  color: rgb(190, 188, 188);
 }
 </style>

@@ -30,9 +30,10 @@ const total = computed(() => {
     .filter((transaction) => transaction.incomeExpense == 'expense')
     .reduce((acc, transaction) => acc + transaction.amount, 0);
 
-  return (income - expense).toFixed(2);
+  return (income - expense);
 });
 
+console.log(total);
 
 //Get income
 const income = computed(() => {
