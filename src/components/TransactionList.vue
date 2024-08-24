@@ -10,6 +10,7 @@
     >
       <h2>{{ transaction.text }}</h2> <span :class="transaction.incomeExpense == 'expense' ? 'minus' : 'plus'">${{ transaction.amount.toLocaleString() }}</span
       >
+      <!-- <p>{{ transaction.timestamp.toLocaleString() }}</p> -->
       <!-- <button @click="deleteTransaction(transaction.id)" class="delete-btn">x</button> -->
     </li>
   </ul>

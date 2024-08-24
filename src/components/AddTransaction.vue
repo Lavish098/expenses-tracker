@@ -1,9 +1,8 @@
 <template>
   <div class="addTransaction">
     <div class="form-container">
-      <div class="close-btn"><button @click="close">X</button></div>
       <h3>Add new transaction</h3>
-      <form id="form" @submit.prevent="onSubmit">
+      <form id="form" @submit.prevent="handleTransactionSubmitted">
         <div class="form-control">
           <label for="text">Item</label>
           <input
@@ -33,7 +32,7 @@
             placeholder="Enter amount..."
           />
         </div>
-        <button class="btn">Add transaction</button>
+        <button class="btn">Add</button>
       </form>
     </div>
   </div>
@@ -42,100 +41,118 @@
 <script setup>
 import { ref } from "vue";
 import { useToast } from "vue-toastification";
+import { transactionStore } from "../store/index";
+import { useRouter } from 'vue-router';
+
 
 const text = ref("");
 const amount = ref("");
 const incomeExpense = ref("");
 
-const emit = defineEmits([["transactionSubmitted"], ["close"]]);
-
 const toast = useToast();
+const router = useRouter();
+const store = transactionStore();
 
-const close = () => {
-  emit("close");
-}
-const onSubmit = () => {
+const handleTransactionSubmitted = () => {
   if (!text.value || !amount.value) {
     toast.error("Both fields must be filled");
     return;
   }
-  const transactionData = {
+  store.handleTransactionSubmitted({
     text: text.value,
     amount: parseFloat(amount.value),
     incomeExpense: incomeExpense.value,
-  };
-  emit("transactionSubmitted", transactionData);
-  text.value = "";
-  amount.value = "";
-  incomeExpense.value = "";
+  });
+
+  toast.success("Transaction added");
+  router.push('/')
 };
 </script>
 
 <style scoped>
 .addTransaction {
-  top: 0;
-  margin-left: -80px;
-  position: fixed;
-  z-index: 101;
-  min-height: 100vh;
   width: 100%;
+  height: 100vh;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  align-items: center;
-  background-color: rgba(0, 0, 0, 0.4);
+  /* align-items: center; */
 }
 @media screen and (min-width: 425px) {
   .addTransaction {
-  margin-left: -110px;
-}
+    margin-left: -110px;
+  }
 }
 .form-container {
   width: 90%;
   border-radius: 20px;
   padding: 5px 20px;
-  background-color: whitesmoke;
 }
-h3{
+h3 {
   font-size: 18px;
 }
-.close-btn{
-  position: absolute;
-  right: 50px;
-  margin-top: 15px;
-  font-size: 20px;
+input[type="text"],
+input[type="number"] {
+  border: 1px solid #dedede;
+  border-radius: 6px;
+  display: block;
+  font-size: 16px;
+  padding: 15px;
+  width: 100%;
+  outline: none;
 }
-.close-btn button {
-  background-color: whitesmoke;
+label {
+  display: inline-block;
+  margin: 10px 0;
+}
+
+
+#incomeExpense {
+  border: 1px solid #dedede;
+  border-radius: 10px;
+  display: block;
+  font-size: 16px;
+  padding: 14px;
+  width: 70%;
+  outline: none;
+}
+.btn{
   cursor: pointer;
-  color: #9c88ff;
+  background-color: #183856;
+  box-shadow: var(--box-shadow);
+  color: #e4e0e0;
   border: 0;
   display: block;
-  font-size: 20px;
-  padding: 10px;
+  font-size: 13px;
+  margin: 20px 0 30px;
+  font-family: "Lato", sans-serif;
+  letter-spacing: 1px;
+  padding: 15px;
+  border-radius: 10px;
+  width: 100%;
 }
 @media screen and (min-width: 600px) {
   .addTransaction {
-  top: 0;
-  margin-left: -40px;
-  position: fixed;
-  z-index: 101;
-  min-height: 100vh;
-  width: 450px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(0, 0, 0, 0.4);
-}
-.form-container {
-  width: 90%;
-  border-radius: 20px;
-  padding: 5px 50px;
-  background-color: whitesmoke;
-}
-h3{
-  font-size: 25px;
-}
+    top: 0;
+    margin-left: -40px;
+    position: fixed;
+    z-index: 101;
+    min-height: 100vh;
+    width: 450px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+  .form-container {
+    width: 90%;
+    border-radius: 20px;
+    padding: 5px 50px;
+    background-color: whitesmoke;
+  }
+  h3 {
+    font-size: 25px;
+  }
 }
 </style>
