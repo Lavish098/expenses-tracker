@@ -1,6 +1,6 @@
 <template>
 <div class="transaction-container">
-  <h3>Latest Transactions</h3>
+  <h3>Transaction History</h3>
   <ul id="list" class="list">
     <li
       class="plus"
@@ -18,16 +18,16 @@
 </template>
 
 <script setup>
-import { defineProps } from "vue";
+import { defineProps, computed } from "vue";
+import { transactionStore } from "../store/index";
 
 const emit = defineEmits(['transactionDeleted'])
 
-const props = defineProps({
-    transactions:{
-        type: Array,
-        required: true
-    }
-})
+const store = transactionStore()
+
+const transactions = computed(() => {
+  return store.allTransactions;
+});
 
 const deleteTransaction = (id) => {
 emit('transactionDeleted', id)

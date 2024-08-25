@@ -12,7 +12,6 @@
 import Header from "../components/Header.vue";
 import Balance from "../components/Balance.vue";
 import TransactionList from "../components/TransactionList.vue";
-import AddTransactionsBtn from "../components/AddTransactionsBtn.vue";
 
 import { ref, computed, onMounted } from "vue";
 import { transactionStore } from "../store/index";
@@ -21,12 +20,9 @@ import { useToast } from "vue-toastification";
 const toast = useToast();
 const store = transactionStore();
 
-onMounted(() => {
-  store.loadTransactions();
-});
 
 const transactions = computed(() => {
-  return store.allTransactions;
+  return store.allTransactions.sort((a, b) => a.timestamp - b.timestamp);
 });
 
 //Delete transaction

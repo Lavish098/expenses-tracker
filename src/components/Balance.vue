@@ -59,9 +59,8 @@ const expense = computed(() => {
 .balance{
     background-color: #183856;
     box-shadow: 0 5px 50px 0 rgb(0 0 0 / 0.05);
-    margin: 10px 30px;
+    margin: 0 15px;
     padding: 10px;
-    height: 28vh;
     border-radius: 30px;
     color: white;
       font-family: "Lato", sans-serif;

@@ -2,18 +2,16 @@
   <div class="inc-exp-container">
     <div class="income-container">
       <div class="income">
-      <i class="fas fa-arrow-down"></i>
+        <i class="fas fa-arrow-down"></i>
         <h4>Income</h4>
       </div>
       <div>
-        <p id="money-plus" class="money plus">
-          ${{ income.toLocaleString() }}
-        </p>
+        <p id="money-plus" class="money plus">${{ income.toLocaleString() }}</p>
       </div>
     </div>
     <div class="expense-container">
       <div class="expense">
-      <i class="fas fa-arrow-up"></i>
+        <i class="fas fa-arrow-up"></i>
         <h4>Expense</h4>
       </div>
       <div>
@@ -43,20 +41,21 @@ const props = defineProps({
 .inc-exp-container {
   padding: 5px;
   display: flex;
-  margin: 30px 0;
-    justify-content: space-between;
-    width: 100%;
-
+  margin: 30px 0 0 0;
+  justify-content: space-between;
+  width: 100%;
 }
 .inc-exp-container p {
   font-size: 15px;
 }
 .income-container {
-  display: block;
-  width: 50%;
-  margin-right: 60px;
+  display: flex;
+  flex-wrap: wrap;
+  /* justify-content: center; */
+  align-items: center;
+  width: 35%;
 }
-h4{
+h4 {
   font-size: 15px;
   margin-left: 5px;
   color: rgb(190, 188, 188);
@@ -69,16 +68,18 @@ h4{
   color: #ffffff;
   font-size: 20px;
 }
-.income-container p{
+.income-container p {
   font-size: 20px;
 }
-.income{
+.income {
   display: flex;
   align-items: center;
 }
 .expense-container {
- display: block;
-  width: 50%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 35%;
 }
 .expense-container i {
   background-color: rgba(136, 166, 184, 0.4);
@@ -88,11 +89,11 @@ h4{
   color: #ffffff;
   font-size: 20px;
 }
-.expense{
+.expense {
   display: flex;
   align-items: center;
 }
-.expense-container p{
+.expense-container p {
   font-size: 20px;
 }
 .money.plus {

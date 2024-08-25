@@ -76,7 +76,6 @@ const handleTransactionSubmitted = () => {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  /* align-items: center; */
 }
 @media screen and (min-width: 425px) {
   .addTransaction {

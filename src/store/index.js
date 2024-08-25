@@ -5,9 +5,7 @@ export const transactionStore = defineStore("transactions", {
     transactions: [],
   }),
   getters: {
-    allTransactions: (state) => {
-      console.log(state.transactions);
-      
+    allTransactions: (state) => {      
       return state.transactions;
     },
   },

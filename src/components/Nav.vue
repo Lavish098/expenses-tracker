@@ -8,8 +8,8 @@
             <router-link class="link" :to="{ name: 'AddTransaction' }"
               >Movies</router-link
             >
-            <!-- <router-link v-if="admin" class="link" :to="{name: 'MoviesCreatePost'}">Create Post</router-link>
-                      <router-link v-if="!user" class="link" :to="{name: 'Login'}">Login/Register</router-link> -->
+           <router-link class="link" :to="{name: 'AllTransactions'}">Transaction History</router-link>
+                      <!-- <router-link v-if="!user" class="link" :to="{name: 'Login'}">Login/Register</router-link> -->
           </ul>
         </div>
       </div>
@@ -23,8 +23,10 @@
           <router-link class="link" :to="{ name: 'AddTransaction' }"
             ><i class="fas fa-plus"></i><h3>Add</h3></router-link
           >
-          <!-- <router-link @click="toggleMobileNav" v-if="admin" class="link" :to="{name: 'MoviesCreatePost'}">Create Post</router-link>
-                      <router-link @click="toggleMobileNav" v-if="!user" class="link" :to="{name: 'Login'}">Login/Register</router-link> -->
+          <router-link class="link" :to="{name: 'AllTransactions'}">
+            <i class="fas fa-receipt"></i><h3>History</h3>
+          </router-link>
+                      <!-- <router-link @click="toggleMobileNav" v-if="!user" class="link" :to="{name: 'Login'}">Login/Register</router-link> -->
         </ul>
       </div>
     </nav>
@@ -82,6 +84,10 @@ onMounted(() => {
 }
 
 .link{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 10%;
   text-decoration: none;
   cursor: pointer;
   color: #88a6b8;
@@ -91,6 +97,6 @@ h3{
   font-family: "Lato", sans-serif;
   font-size: 14px;
   font-weight: 500;
-  margin-top: 0px;
+  margin-top: 3px;
 }
 </style>
