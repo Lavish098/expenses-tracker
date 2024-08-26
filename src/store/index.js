@@ -11,11 +11,16 @@ export const transactionStore = defineStore("transactions", {
   },
   actions: {
     handleTransactionSubmitted(transactionData) {
+      const timestamp = new Date();
+const dateOptions = { year: 'numeric', month: '2-digit', day: '2-digit' };
+
+const formattedDate = timestamp.toLocaleDateString('en-US', dateOptions)
+
       // Add the transaction to the state
       this.transactions.push({
         id: this.generateUniqueId(),
         ...transactionData,
-        timestamp: new Date().toISOString(),
+        timestamp: formattedDate,
       });
 
       // Save transactions to local storage

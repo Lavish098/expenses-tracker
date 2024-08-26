@@ -3,18 +3,18 @@
     <div class="income-container">
       <div class="income">
         <i class="fas fa-arrow-down"></i>
-        <h4>Income</h4>
       </div>
-      <div>
+      <div class="income-section">
+        <h4>Income</h4>
         <p id="money-plus" class="money plus">${{ income.toLocaleString() }}</p>
       </div>
     </div>
     <div class="expense-container">
       <div class="expense">
         <i class="fas fa-arrow-up"></i>
-        <h4>Expense</h4>
       </div>
-      <div>
+      <div class="expense-section">
+        <h4>Expense</h4>
         <p id="money-minus" class="money minus">
           ${{ expense.toLocaleString() }}
         </p>
@@ -39,9 +39,8 @@ const props = defineProps({
 </script>
 <style scoped>
 .inc-exp-container {
-  padding: 5px;
   display: flex;
-  margin: 30px 0 0 0;
+  margin: 20px 0 0 0;
   justify-content: space-between;
   width: 100%;
 }
@@ -49,45 +48,64 @@ const props = defineProps({
   font-size: 15px;
 }
 .income-container {
+  background-color: #fff;
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+  width: 49%;
+  border-radius: 10px;
+  padding: 10px 0px 10px 10px;
+}
+.income-section{
   display: flex;
   flex-wrap: wrap;
   /* justify-content: center; */
-  align-items: center;
-  width: 35%;
+  margin-left: 5px;
+  width: 30%;
 }
-h4 {
+.income-section h4 {
   font-size: 15px;
   margin-left: 5px;
-  color: rgb(190, 188, 188);
+  color: rgba(75, 240, 130, 0.596);
+    font-family: "Lato", sans-serif;
+
 }
 .income-container i {
-  background-color: rgba(136, 166, 184, 0.4);
-  padding: 5px;
+  background-color: rgba(75, 240, 130, 0.596);
+  padding: 20px 20px;
   border-radius: 16px;
-  height: 30px;
+  /* height: 30px; */
   color: #ffffff;
   font-size: 20px;
 }
-.income-container p {
+.expense-container {
+  background-color: #fff;
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+  width: 49%;
+  border-radius: 10px;
+  padding: 10px 0px 10px 10px;
+}
+.expense-container i {
+  background-color: rgba(235, 67, 67, 0.596);
+  padding: 20px 20px;
+  border-radius: 16px;
+  /* height: 30px; */
+  color: #ffffff;
   font-size: 20px;
 }
-.income {
-  display: flex;
-  align-items: center;
-}
-.expense-container {
+.expense-section{
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  width: 35%;
+  margin-left: 5px;
+  width: 50%;
 }
-.expense-container i {
-  background-color: rgba(136, 166, 184, 0.4);
-  padding: 5px;
-  border-radius: 17px;
-  height: 30px;
-  color: #ffffff;
-  font-size: 20px;
+.expense-section h4 {
+  font-size: 15px;
+  margin-left: 5px;
+  color: rgba(235, 67, 67, 0.596);
 }
 .expense {
   display: flex;
@@ -97,10 +115,15 @@ h4 {
   font-size: 20px;
 }
 .money.plus {
-  color: rgb(190, 188, 188);
+  color: black;
+  font-size: 15px;
+  font-weight: bold;
 }
 
 .money.minus {
-  color: rgb(190, 188, 188);
+  color: black;
+  font-size: 15px;
+    font-weight: bold;
+
 }
 </style>

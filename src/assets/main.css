@@ -9,8 +9,7 @@
 }
 
 body {
-  background-color: #ffffff;
-  /* min-height: 100vh; */
+  background-color: rgba(230, 230, 230, 0.3);
   width: 100%;
   margin: 0;
   font-family: "Lato", sans-serif;

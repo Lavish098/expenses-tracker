@@ -8,9 +8,9 @@
       :key="transaction.id"
       
     >
-      <h2>{{ transaction.text }}</h2> <span :class="transaction.incomeExpense == 'expense' ? 'minus' : 'plus'">${{ transaction.amount.toLocaleString() }}</span
+      <h2>{{ transaction.text }}</h2> <span :class="transaction.incomeExpense == 'expense' ? 'minus' : 'plus'">${{ transaction.amount.toLocaleString() }}
+        <p>{{ transaction.timestamp }}</p></span
       >
-      <!-- <p>{{ transaction.timestamp.toLocaleString() }}</p> -->
       <!-- <button @click="deleteTransaction(transaction.id)" class="delete-btn">x</button> -->
     </li>
   </ul>
@@ -32,10 +32,13 @@ const props = defineProps({
 const deleteTransaction = (id) => {
 emit('transactionDeleted', id)
 }
+
+
 </script>
 <style scoped>
 .transaction-container{
   margin: 40px 20px;
+  padding-bottom: 30px;
 }
 h3{
   padding: 0 0 0px 20px;
@@ -71,21 +74,30 @@ h2{
 }
 
 .list li {
-    box-shadow: 0 5px 50px 0 rgb(0 0 0 / 0.05);
+    border: 1px solid rgba(180, 178, 178, 0.4);
   color: #333;
   height: 80px;
   display: flex;
   justify-content: space-between;
-  position: relative;
   padding: 15px 10px;
   margin: 10px 0;
   border-radius: 10px;
 }
 
-.list li>span.plus {
+.list li>span {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  width: 30%;
   color: #2ecc71;
   font-weight: 700;
   letter-spacing: 1px;
+}
+.list li>span>p {
+  color: rgba(180, 178, 178, 0.7);
+  font-size: 13px;
+  font-weight: 700;
 }
 
 .list li>span.minus {

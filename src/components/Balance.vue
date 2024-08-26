@@ -1,7 +1,7 @@
 <template>
 <div class="balance">
     <div class="balance-container">
-    <h4>Your Balance</h4>
+    <h4>Total Balance</h4>
       <h1 id="balance">${{ total.toLocaleString() }}</h1>
     </div>
           <IncomeExpenses :income="+income" :expense="+expense" />
@@ -57,11 +57,8 @@ const expense = computed(() => {
 </script>
 <style scoped>
 .balance{
-    background-color: #183856;
-    box-shadow: 0 5px 50px 0 rgb(0 0 0 / 0.05);
-    margin: 0 15px;
-    padding: 10px;
-    border-radius: 30px;
+    margin: 0 5px;
+    padding: 5px;
     color: white;
       font-family: "Lato", sans-serif;
 
@@ -70,13 +67,14 @@ const expense = computed(() => {
     margin: 10px;
 }
 .balance h4{
-    font-size: 12px;
-    letter-spacing: 2px;
-    color: rgb(255, 254, 254);
+        font-family: "Lato", sans-serif;
+    font-size: 15px;
+    color: #d1d5d8;
 }
 .balance h1{
     margin: 7px 10px;
-    font-size: 30px;
+    font-size: 35px;
+    color: rgb(100, 99, 99);
 }
 
 </style>
