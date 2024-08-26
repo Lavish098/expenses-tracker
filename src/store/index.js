@@ -6,21 +6,58 @@ export const transactionStore = defineStore("transactions", {
   }),
   getters: {
     allTransactions: (state) => {      
-      return state.transactions;
+      return state.transactions.sort((a, b) => b.timestamp - a.timestamp);
     },
+    groupedTransactions: (state) => {
+      const grouped = {}
+       
+      // Get today's date string for comparison
+  const today = new Date();
+  const todayYear = today.getFullYear();
+  const todayMonth = (today.getMonth() + 1).toString().padStart(2, '0');
+  const todayDay = today.getDate().toString().padStart(2, '0');
+  const todayString = `${todayYear}/${todayMonth}/${todayDay}`;
+
+  state.transactions.forEach((transaction) => {
+    const date = new Date(transaction.timestamp);
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Add leading zero
+    const day = date.getDate().toString().padStart(2, '0'); // Add leading zero
+
+    // Create date string
+    let dateString = `${year}/${month}/${day}`;
+
+    // Check if the transaction date is today
+    if (dateString === todayString) {
+      dateString = "Today";
+    }
+
+    // Initialize date group if it doesn't exist
+    if (!grouped[dateString]) {
+      grouped[dateString] = [];
+    }
+
+    // Add transaction to the date group
+    grouped[dateString].push(transaction);
+  });
+
+  // Sort each group by time (timestamp)
+  for (const date in grouped) {
+    grouped[date].sort((a, b) => b.timestamp - a.timestamp);
+  }
+
+  console.log("Grouped Transactions:", grouped);
+
+  return grouped;
+    }
   },
   actions: {
     handleTransactionSubmitted(transactionData) {
-      const timestamp = new Date();
-const dateOptions = { year: 'numeric', month: '2-digit', day: '2-digit' };
-
-const formattedDate = timestamp.toLocaleDateString('en-US', dateOptions)
-
       // Add the transaction to the state
       this.transactions.push({
         id: this.generateUniqueId(),
         ...transactionData,
-        timestamp: formattedDate,
+        timestamp: Date.now(),
       });
 
       // Save transactions to local storage
@@ -42,7 +79,10 @@ const formattedDate = timestamp.toLocaleDateString('en-US', dateOptions)
         localStorage.getItem("transactions")
       );
       if (savedTransactions) {
-        this.transactions = savedTransactions;
+        this.transactions = savedTransactions.map((transaction) => ({
+          ...transaction,
+          timestamp: new Date(transaction.timestamp).getTime()
+        }))
       }
 
       console.log(savedTransactions);

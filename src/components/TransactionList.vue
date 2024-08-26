@@ -4,12 +4,12 @@
   <ul id="list" class="list">
     <li
       class="plus"
-      v-for="transaction in transactions"
+      v-for="transaction in transactions.slice(0, 5)"
       :key="transaction.id"
       
     >
       <h2>{{ transaction.text }}</h2> <span :class="transaction.incomeExpense == 'expense' ? 'minus' : 'plus'">${{ transaction.amount.toLocaleString() }}
-        <p>{{ transaction.timestamp }}</p></span
+        <p>{{ formatTimestamp(transaction.timestamp) }}</p></span
       >
       <!-- <button @click="deleteTransaction(transaction.id)" class="delete-btn">x</button> -->
     </li>
@@ -18,7 +18,9 @@
 </template>
 
 <script setup>
-import { defineProps } from "vue";
+import { computed, defineProps, onMounted } from "vue";
+
+
 
 const emit = defineEmits(['transactionDeleted'])
 
@@ -28,6 +30,25 @@ const props = defineProps({
         required: true
     }
 })
+
+const formatTimestamp = (timestamp) => {
+  const date = new Date(timestamp);
+  const now = new Date();
+  const seconds = Math.floor((now - date) / 1000);
+  const minutes = Math.floor(seconds / 60)
+  const hours = Math.floor(minutes / 60);
+  const days = Math.floor(hours / 24);
+
+  if (days > 0){
+  return `${days} day${days > 1 ? 's' : ''} ago`
+  } else if (hours > 0){
+  return `${hours} hour${hours > 1 ? 's' : ''} ago`
+  }if (minutes > 0){
+  return `${minutes} minutes${minutes > 1 ? 's' : ''} ago`
+  }if (seconds > 0){
+  return `${seconds} second${seconds > 1 ? 's' : ''} ago`
+  }  
+  }
 
 const deleteTransaction = (id) => {
 emit('transactionDeleted', id)
@@ -89,7 +110,7 @@ h2{
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  width: 30%;
+  width: 35%;
   color: #2ecc71;
   font-weight: 700;
   letter-spacing: 1px;
