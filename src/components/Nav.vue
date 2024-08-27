@@ -1,6 +1,6 @@
 <template>
   <header>
-    <nav class="container">
+    <!-- <nav class="container">
       <div class="branding">
         <div class="nav-links">
           <ul v-show="!mobile">
@@ -9,37 +9,43 @@
               >Movies</router-link
             >
            <router-link class="link" :to="{name: 'AllTransactions'}">Transaction History</router-link>
-                      <!-- <router-link v-if="!user" class="link" :to="{name: 'Login'}">Login/Register</router-link> -->
+                      <router-link v-if="!user" class="link" :to="{name: 'Login'}">Login/Register</router-link>
           </ul>
         </div>
       </div>
-    </nav>
+    </nav> -->
     <nav name="mobile-nav" class="mobile-container">
       <div class="mobileNav">
         <ul class="mobile-nav" v-show="mobile">
-          <router-link class="link" :to="{ name: 'Home' }"
+          <router-link class="link" :to="{ name: 'Home' }" @click="falseBubble"
             ><i class="fas fa-home"></i><h3>Home</h3></router-link
           >
-          <router-link class="link" :to="{ name: 'AddTransaction' }"
-            ><i class="fas fa-plus"></i><h3>Add</h3></router-link
+          <div class="link" @click="showBubble"
+            ><i class="fas fa-plus"></i><h3>Add</h3></div
           >
-          <router-link class="link" :to="{name: 'AllTransactions'}">
+          <router-link class="link" :to="{name: 'AllTransactions'}" @click="falseBubble">
             <i class="fas fa-receipt"></i><h3>History</h3>
+          </router-link>
+           <router-link class="link" :to="{name: 'AllTransactions'}" @click="falseBubble">
+            <i class="fas fa-receipt"></i><h3>Overview</h3>
           </router-link>
                       <!-- <router-link @click="toggleMobileNav" v-if="!user" class="link" :to="{name: 'Login'}">Login/Register</router-link> -->
         </ul>
       </div>
     </nav>
+    <AddBubble v-if="bubble" @showBubble="showBubble"/>
   </header>
 </template>
 
 <script setup>
 import { onMounted, ref } from "vue";
+import AddBubble from './addBubble.vue'
 
 const mobile = ref(false); // Initialize with a default value
 const mobileNav = ref(false);
 const windowWidth = ref(window.innerWidth); // Initialize with the current window width
 const profileMenu = ref(null);
+const bubble = ref(false)
 
 const checkScreen = () => {
   windowWidth.value = window.innerWidth; // Update window width
@@ -52,6 +58,15 @@ const checkScreen = () => {
   }
 };
 
+const falseBubble = () => {
+  if(bubble){
+    bubble.value = false
+  }
+}
+
+const showBubble = () => {
+  bubble.value = !bubble.value
+}
 onMounted(() => {
   window.addEventListener("resize", checkScreen); // Correctly reference the checkScreen function
   checkScreen(); // Call the function to initialize the state

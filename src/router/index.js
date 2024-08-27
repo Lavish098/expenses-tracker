@@ -1,13 +1,15 @@
 import { createWebHistory, createRouter } from 'vue-router'
 
 import Home from '../components/Home.vue'
-import AddTransaction from "../components/AddTransaction.vue";
+import AddIncome from "../components/AddIncome.vue";
+import AddExpense from "../components/AddExpense.vue";
 import AllTransactions from "../components/AllTransactions.vue";
 
 
 const routes = [
   { path: '/', component: Home, name: 'Home' },
-  { path: '/addTransaction', component: AddTransaction, name: 'AddTransaction' },
+  { path: '/addIncome', component: AddIncome, name: 'AddIncome' },
+  { path: '/addExpense', component: AddExpense, name: 'AddExpense' },
   { path: '/allTransactions', component: AllTransactions, name: 'AllTransactions' },
 
 ]

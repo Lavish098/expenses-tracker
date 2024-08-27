@@ -23,19 +23,4 @@ const store = transactionStore();
 const transactions = computed(() => {
   return store.allTransactions;
 });
-
-// //Delete transaction
-// const handleTransactionDeleted = (id) => {
-//   transactions.value = transactions.value.filter(
-//     (transaction) => transaction.id !== id
-//   );
-
-//   saveTransaction();
-//   toast.success("Transaction deleted");
-// };
-
-// //save to localstorage
-// const saveTransaction = () => {
-//   localStorage.setItem("transactions", JSON.stringify(transactions.value));
-// };
 </script>

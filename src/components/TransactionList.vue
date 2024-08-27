@@ -1,16 +1,22 @@
 <template>
 <div class="transaction-container">
   <h3>Latest Transactions</h3>
-  <ul id="list" class="list">
+  <ul class="list">
     <li
       class="plus"
       v-for="transaction in transactions.slice(0, 5)"
       :key="transaction.id"
       
     >
-      <h2>{{ transaction.text }}</h2> <span :class="transaction.incomeExpense == 'expense' ? 'minus' : 'plus'">${{ transaction.amount.toLocaleString() }}
-        <p>{{ formatTimestamp(transaction.timestamp) }}</p></span
-      >
+    <div id="list-container">
+    <img :src="transaction.imageSrc" alt="" v-if="transaction.imageSrc">
+    <span>
+      <h2>{{ transaction.text }}</h2> 
+        <p>{{ formatTimestamp(transaction.timestamp) }}</p>
+    </span>
+    </div>
+      <span :class="transaction.incomeExpense == 'expense' ? 'minus' : 'plus'">${{ transaction.amount.toLocaleString() }}
+        </span>
       <!-- <button @click="deleteTransaction(transaction.id)" class="delete-btn">x</button> -->
     </li>
   </ul>
@@ -87,6 +93,10 @@ h2{
 .delete-btn:focus {
   outline: 0;
 }
+#list-container{
+  display: flex;
+  width: 50%;
+}
 
 .list {
   list-style-type: none;
@@ -115,18 +125,20 @@ h2{
   font-weight: 700;
   letter-spacing: 1px;
 }
-.list li>span>p {
+#list-container span p {
   color: rgba(180, 178, 178, 0.7);
-  font-size: 13px;
+  font-size: 17px;
   font-weight: 700;
+  margin-top: 5px;
 }
-
+#list-container span{
+  margin-left: 10px;
+}
 .list li>span.minus {
   color: #fd1900;
     font-weight: 700;
   letter-spacing: 1px;
 }
-
 .delete-btn {
   cursor: pointer;
   background-color: #e74c3c;

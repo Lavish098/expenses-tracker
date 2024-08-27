@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="transaction">
   <h3>Transaction History</h3>
 <div class="transaction-container" v-for="(transactions, date) in transactions" :key="date">
     <h3>{{date}}</h3>
@@ -58,6 +58,9 @@ emit('transactionDeleted', id)
 }
 </script>
 <style scoped>
+.transaction{
+  padding-bottom: 40px;
+}
 .transaction-container{
   margin: 40px 20px;
 }

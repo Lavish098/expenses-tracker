@@ -1,30 +1,10 @@
 <template>
   <div class="addTransaction">
     <div class="form-container">
-      <h3>Add new transaction</h3>
+      <h3>Add Income</h3>
       <form id="form" @submit.prevent="handleTransactionSubmitted">
         <div class="form-control">
-          <label for="text">Item</label>
-          <input
-            v-model="text"
-            type="text"
-            id="text"
-            placeholder="Enter item..."
-          />
-        </div>
-        <div class="form-control">
-          <label for="text">Income/Expense</label>
-          <select
-            v-model="incomeExpense"
-            name="incomeExpense"
-            id="incomeExpense"
-          >
-            <option value="income" selected>Income</option>
-            <option value="expense">Expense</option>
-          </select>
-        </div>
-        <div class="form-control">
-          <label for="amount">Amount</label>
+          <label for="amount">How much did you recieve?</label>
           <input
             v-model="amount"
             type="text"
@@ -32,6 +12,16 @@
             placeholder="Enter amount..."
           />
         </div>
+        <div class="form-control">
+          <label for="amount">Description:</label>
+          <input
+            v-model="description"
+            type="text"
+            id="amount"
+            placeholder="Enter amount..."
+          />
+        </div>
+
         <button class="btn">Add</button>
       </form>
     </div>
@@ -42,12 +32,13 @@
 import { ref } from "vue";
 import { useToast } from "vue-toastification";
 import { transactionStore } from "../store/index";
-import { useRouter } from 'vue-router';
+import { useRouter } from "vue-router";
+import imageName from '@/assets/reshot-icon-income-FS9HTJX8GM.svg';
 
-
-const text = ref("");
+const text = ref("Income");
+const description = ref("");
 const amount = ref("");
-const incomeExpense = ref("");
+const incomeExpense = ref("income");
 
 const toast = useToast();
 const router = useRouter();
@@ -60,12 +51,14 @@ const handleTransactionSubmitted = () => {
   }
   store.handleTransactionSubmitted({
     text: text.value,
+    description: description.value,
     amount: parseFloat(amount.value),
     incomeExpense: incomeExpense.value,
+    imageSrc: imageName,
   });
 
   toast.success("Transaction added");
-  router.push('/')
+  router.push("/");
 };
 </script>
 
@@ -105,7 +98,6 @@ label {
   margin: 10px 0;
 }
 
-
 #incomeExpense {
   border: 1px solid #dedede;
   border-radius: 10px;
@@ -115,7 +107,7 @@ label {
   width: 70%;
   outline: none;
 }
-.btn{
+.btn {
   cursor: pointer;
   background-color: #183856;
   box-shadow: var(--box-shadow);

@@ -11,7 +11,7 @@
 .header {
   display: flex;
   align-items: center;
-  width: 100%;
+  width: 70%;
   margin: 0 20px;
 }
 h2 {
