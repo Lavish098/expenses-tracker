@@ -4,6 +4,10 @@
       <h3>Add Income</h3>
       <form id="form" @submit.prevent="handleTransactionSubmitted">
         <div class="form-control">
+          <label for="amount">What type of income</label>
+          <input v-model="text" type="text" id="name" placeholder="" />
+        </div>
+        <div class="form-control">
           <label for="amount">How much did you recieve?</label>
           <input
             v-model="amount"
@@ -17,9 +21,12 @@
           <input
             v-model="description"
             type="text"
-            id="amount"
-            placeholder="Enter amount..."
+            id="description"
+            placeholder="A short description"
           />
+        </div>
+        <div class="date">
+          <VueDatepickerUi v-model="selectedDate" lang="en" />
         </div>
 
         <button class="btn">Add</button>
@@ -31,11 +38,18 @@
 <script setup>
 import { ref } from "vue";
 import { useToast } from "vue-toastification";
+import "vue-datepicker-ui/lib/vuedatepickerui.css";
+import VueDatepickerUi from "vue-datepicker-ui";
 import { transactionStore } from "../store/index";
 import { useRouter } from "vue-router";
-import imageName from '@/assets/reshot-icon-income-FS9HTJX8GM.svg';
+import imageName from "@/assets/reshot-icon-income-FS9HTJX8GM.svg";
 
-const text = ref("Income");
+const selectedDate = ref([
+  new Date(),
+])
+
+
+const text = ref("");
 const description = ref("");
 const amount = ref("");
 const incomeExpense = ref("income");
@@ -50,6 +64,7 @@ const handleTransactionSubmitted = () => {
     return;
   }
   store.handleTransactionSubmitted({
+    timestamp: selectedDate.value,
     text: text.value,
     description: description.value,
     amount: parseFloat(amount.value),
@@ -69,6 +84,9 @@ const handleTransactionSubmitted = () => {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+}
+.date{
+  margin-top: 10px;
 }
 @media screen and (min-width: 425px) {
   .addTransaction {

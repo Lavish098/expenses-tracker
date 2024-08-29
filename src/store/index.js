@@ -57,7 +57,6 @@ export const transactionStore = defineStore("transactions", {
       this.transactions.push({
         id: this.generateUniqueId(),
         ...transactionData,
-        timestamp: Date.now(),
       });
 
       // Save transactions to local storage

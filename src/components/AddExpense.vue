@@ -1,10 +1,10 @@
 <template>
   <div class="addTransaction">
     <div class="form-container">
-      <h3>Add Expense</h3>
+      <h3>Add Expenses</h3>
       <form id="form" @submit.prevent="handleTransactionSubmitted">
         <div class="form-control">
-          <label for="text">Item</label>
+          <label for="text">What did you spend on?</label>
           <input
             v-model="text"
             type="text"
@@ -13,18 +13,7 @@
           />
         </div>
         <div class="form-control">
-          <label for="text">Income/Expense</label>
-          <select
-            v-model="incomeExpense"
-            name="incomeExpense"
-            id="incomeExpense"
-          >
-            <option value="income" selected>Income</option>
-            <option value="expense">Expense</option>
-          </select>
-        </div>
-        <div class="form-control">
-          <label for="amount">Amount</label>
+          <label for="amount">Amount Spent</label>
           <input
             v-model="amount"
             type="text"
@@ -32,6 +21,23 @@
             placeholder="Enter amount..."
           />
         </div>
+        <div class="date">
+          <VueDatepickerUi v-model="date" lang="en" />
+        </div>
+        <div class="category-list">
+          <h3>Select Categories</h3>
+          <div
+            v-for="(category, index) in categories"
+            :key="index"
+            class="category-item"
+            :class="{ selected: selectedCategory === index }"
+            @click="selectCategory(index)"
+          >
+            <img :src="category.icon" alt="category icon" />
+            <span>{{ category.name }}</span>
+          </div>
+        </div>
+
         <button class="btn">Add</button>
       </form>
     </div>
@@ -39,19 +45,53 @@
 </template>
 
 <script setup>
+import "vue-datepicker-ui/lib/vuedatepickerui.css";
+import VueDatepickerUi from "vue-datepicker-ui";
 import { ref } from "vue";
 import { useToast } from "vue-toastification";
 import { transactionStore } from "../store/index";
-import { useRouter } from 'vue-router';
+import { useRouter } from "vue-router";
 
+import electricity from "@/assets/reshot-icon-television-5YBTMCDJR3.svg";
+import health from "@/assets/reshot-icon-ambulance-ZF6E3TYN2A.svg";
+import travel from "@/assets/reshot-icon-bus-CV3PK5SN9T.svg";
+import family from "@/assets/reshot-icon-family-S8LZ92RTB5.svg";
+import food from "@/assets/reshot-icon-hot-food-DUYKGBF2XM.svg";
+import rent from "@/assets/reshot-icon-house-8CHZLM4BDK.svg";
+import internet from "@/assets/reshot-icon-internet-C7DXQ53M64.svg";
+import shopping from "@/assets/reshot-icon-online-shopping-ZSYWV5E7NQ.svg";
 
+const date = ref();
 const text = ref("");
 const amount = ref("");
-const incomeExpense = ref("");
+const incomeExpense = ref("expense");
+const category = ref({ name: '', image: '' })
+
+const selectedCategory = ref(null);
+
+const categories = [
+  { name: "Electricity", icon: electricity },
+  { name: "Food", icon: food },
+  { name: "Shopping", icon: shopping },
+  { name: "Travel", icon: travel },
+  { name: "Health", icon: health },
+  { name: "Rent", icon: rent },
+  { name: "Internet", icon: internet },
+  { name: "Family", icon: family },
+];
 
 const toast = useToast();
 const router = useRouter();
 const store = transactionStore();
+
+const selectCategory = (index) => {  
+  selectedCategory.value = index;
+category.value = {name: categories[index].name, image: categories[index].icon};
+  
+console.log(category.value);
+};
+
+
 
 const handleTransactionSubmitted = () => {
   if (!text.value || !amount.value) {
@@ -59,13 +99,15 @@ const handleTransactionSubmitted = () => {
     return;
   }
   store.handleTransactionSubmitted({
+    timestamp: date.value,
     text: text.value,
     amount: parseFloat(amount.value),
     incomeExpense: incomeExpense.value,
+    category: category.value
   });
 
   toast.success("Transaction added");
-  router.push('/')
+  router.push("/");
 };
 </script>
 
@@ -76,6 +118,7 @@ const handleTransactionSubmitted = () => {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  align-items: center;
 }
 @media screen and (min-width: 425px) {
   .addTransaction {
@@ -88,10 +131,15 @@ const handleTransactionSubmitted = () => {
   padding: 5px 20px;
 }
 h3 {
-  font-size: 18px;
+  display: flex;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 400;
+  color: #183856;;
 }
 input[type="text"],
-input[type="number"] {
+input[type="number"],
+input[type="date"] {
   border: 1px solid #dedede;
   border-radius: 6px;
   display: block;
@@ -103,19 +151,14 @@ input[type="number"] {
 label {
   display: inline-block;
   margin: 10px 0;
+  color: #183856;;
 }
 
 
-#incomeExpense {
-  border: 1px solid #dedede;
-  border-radius: 10px;
-  display: block;
-  font-size: 16px;
-  padding: 14px;
-  width: 70%;
-  outline: none;
+.date{
+  margin-top: 10px;
 }
-.btn{
+.btn {
   cursor: pointer;
   background-color: #183856;
   box-shadow: var(--box-shadow);
@@ -153,5 +196,41 @@ label {
   h3 {
     font-size: 25px;
   }
+}
+
+.date-picker {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  margin-top: 10px;
+  width: 100%;
+  outline: none;
+}
+
+.category-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.category-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.category-item.selected {
+  background-color: #f0f0f0;
+}
+
+.category-item img {
+  width: 30px;
+  height: 30px;
+  margin-bottom: 5px;
 }
 </style>

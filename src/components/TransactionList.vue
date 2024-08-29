@@ -10,6 +10,8 @@
     >
     <div id="list-container">
     <img :src="transaction.imageSrc" alt="" v-if="transaction.imageSrc">
+        <img :src="transaction.category.image" alt="" v-if="transaction.category">
+
     <span>
       <h2>{{ transaction.text }}</h2> 
         <p>{{ formatTimestamp(transaction.timestamp) }}</p>
@@ -21,6 +23,7 @@
     </li>
   </ul>
 </div>
+
 </template>
 
 <script setup>
@@ -37,7 +40,11 @@ const props = defineProps({
     }
 })
 
+
+
 const formatTimestamp = (timestamp) => {
+  console.log(timestamp);
+  
   const date = new Date(timestamp);
   const now = new Date();
   const seconds = Math.floor((now - date) / 1000);
