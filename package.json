@@ -9,10 +9,16 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@coreui/coreui": "^5.1.2",
+    "@coreui/coreui-pro": "^5.4.1",
+    "@coreui/vue": "^5.3.0",
+    "@coreui/vue-pro": "^5.4.0",
     "@vuepic/vue-datepicker": "^9.0.2",
+    "flatpickr": "^4.6.13",
     "pinia": "^2.2.2",
     "vue": "^3.4.29",
     "vue-datepicker-ui": "^3.1.1",
+    "vue-flatpickr-component": "^11.0.5",
     "vue-router": "^4.4.3",
     "vue-toastification": "^2.0.0-rc.5"
   },

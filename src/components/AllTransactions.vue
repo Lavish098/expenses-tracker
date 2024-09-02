@@ -11,8 +11,18 @@
       :key="transaction.timestamp"
       
     >
-      <h2>{{ transaction.text }}</h2> <span :class="transaction.incomeExpense == 'expense' ? 'minus' : 'plus'">${{ transaction.amount.toLocaleString() }}
-              <p>{{ formatTimestamp(transaction.timestamp)}}</p></span>
+    <div id="list-container">
+
+    <img :src="transaction.imageSrc" alt="" v-if="transaction.imageSrc">
+          <img :src="transaction.category.image" alt="" v-if="transaction.category">
+        
+        <span>
+      <h2>{{ transaction.text }}</h2> 
+              <p>{{ formatTimestamp(transaction.transactionTime)}}</p>
+          </span>
+    </div>
+      <span :class="transaction.incomeExpense == 'expense' ? 'minus' : 'plus'">${{ transaction.amount.toLocaleString() }}
+              </span>
       <!-- <button @click="deleteTransaction(transaction.id)" class="delete-btn">x</button> -->
     </li>
   </ul>
@@ -34,23 +44,9 @@ const transactions = computed(() => {
 console.log(transactions.value);
 
 
-const formatTimestamp = (timestamp) => {
-  const date = new Date(timestamp);
-  const now = new Date();
-  const seconds = Math.floor((now - date) / 1000);
-  const minutes = Math.floor(seconds / 60)
-  const hours = Math.floor(minutes / 60);
-  const days = Math.floor(hours / 24);
-
-  if (days > 0){
-  return `${days} day${days > 1 ? 's' : ''} ago`
-  } else if (hours > 0){
-  return `${hours} hour${hours > 1 ? 's' : ''} ago`
-  }if (minutes > 0){
-  return `${minutes} minutes${minutes > 1 ? 's' : ''} ago`
-  }if (seconds > 0){
-  return `${seconds} second${seconds > 1 ? 's' : ''} ago`
-  }  
+const formatTimestamp = (transactionTime) => {
+   const dateObject = new Date(transactionTime);
+  return dateObject.toLocaleDateString('en-US', {month: 'short', day: 'numeric'})
   }
 
 const deleteTransaction = (id) => {
@@ -90,7 +86,19 @@ h2{
 .delete-btn:focus {
   outline: 0;
 }
-
+#list-container{
+  display: flex;
+  width: 50%;
+}
+#list-container span p {
+  color: rgba(180, 178, 178, 0.7);
+  font-size: 17px;
+  font-weight: 700;
+  margin-top: 5px;
+}
+#list-container span{
+  margin-left: 10px;
+}
 .list {
   list-style-type: none;
   padding: 0;

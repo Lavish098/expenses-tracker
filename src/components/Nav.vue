@@ -83,6 +83,7 @@ onMounted(() => {
     background-color: #ffffff;
     z-index: 9999999;
     border-radius: 10px 10px 0 0;
+    padding-top: 10px;
 }
 .mobileNav{
   display: flex;

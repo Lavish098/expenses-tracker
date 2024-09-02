@@ -3,7 +3,7 @@
     <div class="form-container">
       <h3>Add Expenses</h3>
       <form id="form" @submit.prevent="handleTransactionSubmitted">
-        <div class="form-control">
+        <div class="form-content">
           <label for="text">What did you spend on?</label>
           <input
             v-model="text"
@@ -12,7 +12,7 @@
             placeholder="Enter item..."
           />
         </div>
-        <div class="form-control">
+        <div class="form-content">
           <label for="amount">Amount Spent</label>
           <input
             v-model="amount"
@@ -21,11 +21,17 @@
             placeholder="Enter amount..."
           />
         </div>
-        <div class="date">
-          <VueDatepickerUi v-model="date" lang="en" />
+        <div>
+          <CDatePicker
+            v-model:date="date"
+            label="Date"
+            timepicker
+          />
         </div>
         <div class="category-list">
           <h3>Select Categories</h3>
+          <div class="category-container">
+
           <div
             v-for="(category, index) in categories"
             :key="index"
@@ -37,6 +43,7 @@
             <span>{{ category.name }}</span>
           </div>
         </div>
+          </div>
 
         <button class="btn">Add</button>
       </form>
@@ -45,10 +52,10 @@
 </template>
 
 <script setup>
-import "vue-datepicker-ui/lib/vuedatepickerui.css";
-import VueDatepickerUi from "vue-datepicker-ui";
 import { ref } from "vue";
 import { useToast } from "vue-toastification";
+import { CDatePicker } from "@coreui/vue-pro";
+import "@coreui/coreui-pro/dist/css/coreui.min.css";
 import { transactionStore } from "../store/index";
 import { useRouter } from "vue-router";
 
@@ -61,7 +68,7 @@ import rent from "@/assets/reshot-icon-house-8CHZLM4BDK.svg";
 import internet from "@/assets/reshot-icon-internet-C7DXQ53M64.svg";
 import shopping from "@/assets/reshot-icon-online-shopping-ZSYWV5E7NQ.svg";
 
-const date = ref();
+const date = ref(new Date());
 const text = ref("");
 const amount = ref("");
 const incomeExpense = ref("expense");
@@ -99,7 +106,8 @@ const handleTransactionSubmitted = () => {
     return;
   }
   store.handleTransactionSubmitted({
-    timestamp: date.value,
+    transactionTime: date.value,
+    timestamp: new Date(),
     text: text.value,
     amount: parseFloat(amount.value),
     incomeExpense: incomeExpense.value,
@@ -135,7 +143,7 @@ h3 {
   justify-content: center;
   font-size: 20px;
   font-weight: 400;
-  color: #183856;;
+  color: #183856;
 }
 input[type="text"],
 input[type="number"],
@@ -208,29 +216,37 @@ label {
 }
 
 .category-list {
-  display: flex;
-  flex-wrap: wrap;
   gap: 10px;
+  margin-top: 20px;
 }
 
-.category-item {
+.category-container {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  border: 1px solid #ccc;
+  width: 100%;
   border-radius: 5px;
   padding: 10px;
   cursor: pointer;
+  overflow: scroll;
   transition: background-color 0.3s ease;
 }
 
+.category-item{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+
 .category-item.selected {
-  background-color: #f0f0f0;
+  border-radius: 20px;
+  background-color: rgba(0, 0, 0, 0.2);
 }
 
 .category-item img {
-  width: 30px;
-  height: 30px;
+  width: 50px;
+  height: 50px;
   margin-bottom: 5px;
 }
 </style>

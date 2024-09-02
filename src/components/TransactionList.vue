@@ -14,7 +14,7 @@
 
     <span>
       <h2>{{ transaction.text }}</h2> 
-        <p>{{ formatTimestamp(transaction.timestamp) }}</p>
+        <p>{{ formatTimestamp(transaction.transactionTime) }}</p>
     </span>
     </div>
       <span :class="transaction.incomeExpense == 'expense' ? 'minus' : 'plus'">${{ transaction.amount.toLocaleString() }}
@@ -42,25 +42,9 @@ const props = defineProps({
 
 
 
-const formatTimestamp = (timestamp) => {
-  console.log(timestamp);
-  
-  const date = new Date(timestamp);
-  const now = new Date();
-  const seconds = Math.floor((now - date) / 1000);
-  const minutes = Math.floor(seconds / 60)
-  const hours = Math.floor(minutes / 60);
-  const days = Math.floor(hours / 24);
-
-  if (days > 0){
-  return `${days} day${days > 1 ? 's' : ''} ago`
-  } else if (hours > 0){
-  return `${hours} hour${hours > 1 ? 's' : ''} ago`
-  }if (minutes > 0){
-  return `${minutes} minutes${minutes > 1 ? 's' : ''} ago`
-  }if (seconds > 0){
-  return `${seconds} second${seconds > 1 ? 's' : ''} ago`
-  }  
+const formatTimestamp = (transactionTime) => {
+  const dateObject = new Date(transactionTime);
+  return dateObject.toLocaleDateString('en-US', {month: 'short', day: 'numeric'})
   }
 
 const deleteTransaction = (id) => {

@@ -3,11 +3,11 @@
     <div class="form-container">
       <h3>Add Income</h3>
       <form id="form" @submit.prevent="handleTransactionSubmitted">
-        <div class="form-control">
+        <div class="form-content">
           <label for="amount">What type of income</label>
           <input v-model="text" type="text" id="name" placeholder="" />
         </div>
-        <div class="form-control">
+        <div class="form-content">
           <label for="amount">How much did you recieve?</label>
           <input
             v-model="amount"
@@ -16,7 +16,7 @@
             placeholder="Enter amount..."
           />
         </div>
-        <div class="form-control">
+        <div class="form-content">
           <label for="amount">Description:</label>
           <input
             v-model="description"
@@ -25,8 +25,13 @@
             placeholder="A short description"
           />
         </div>
-        <div class="date">
-          <VueDatepickerUi v-model="selectedDate" lang="en" />
+
+        <div>
+          <CDatePicker
+            v-model:date="date"
+            label="Date"
+            timepicker
+          />
         </div>
 
         <button class="btn">Add</button>
@@ -36,17 +41,19 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { useToast } from "vue-toastification";
-import "vue-datepicker-ui/lib/vuedatepickerui.css";
-import VueDatepickerUi from "vue-datepicker-ui";
+import { CDatePicker } from "@coreui/vue-pro";
+import "@coreui/coreui-pro/dist/css/coreui.min.css";
 import { transactionStore } from "../store/index";
 import { useRouter } from "vue-router";
 import imageName from "@/assets/reshot-icon-income-FS9HTJX8GM.svg";
 
-const selectedDate = ref([
-  new Date(),
-])
+const date = ref(new Date());
+const datePicker = ref("");
+
+console.log(date.value);
+
 
 
 const text = ref("");
@@ -64,7 +71,8 @@ const handleTransactionSubmitted = () => {
     return;
   }
   store.handleTransactionSubmitted({
-    timestamp: selectedDate.value,
+    transactionTime: date.value,
+    timestamp: new Date(),
     text: text.value,
     description: description.value,
     amount: parseFloat(amount.value),
@@ -84,9 +92,7 @@ const handleTransactionSubmitted = () => {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-}
-.date{
-  margin-top: 10px;
+  align-items: center;
 }
 @media screen and (min-width: 425px) {
   .addTransaction {
@@ -96,10 +102,15 @@ const handleTransactionSubmitted = () => {
 .form-container {
   width: 90%;
   border-radius: 20px;
-  padding: 5px 20px;
+  padding: 5px 5px;
+  margin-top: 30px;
 }
 h3 {
-  font-size: 18px;
+  display: flex;
+  justify-content: center;
+  font-size: 25px;
+  font-weight: 500;
+  color: #183856;
 }
 input[type="text"],
 input[type="number"] {
@@ -163,5 +174,8 @@ label {
   h3 {
     font-size: 25px;
   }
+}
+.flatpickr-calendar {
+  border-radius: 20px;
 }
 </style>
