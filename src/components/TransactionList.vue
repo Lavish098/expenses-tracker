@@ -4,7 +4,7 @@
   <ul class="list">
     <li
       class="plus"
-      v-for="transaction in transactions.slice(0, 5)"
+      v-for="transaction in todayTransactions.slice(0, 5)"
       :key="transaction.id"
       
     >
@@ -22,12 +22,15 @@
       <!-- <button @click="deleteTransaction(transaction.id)" class="delete-btn">x</button> -->
     </li>
   </ul>
+  <div class="no-transactions" v-if="noTransaction">
+    <h2>No transaction added for today</h2>
+  </div>
 </div>
 
 </template>
 
 <script setup>
-import { computed, defineProps, onMounted } from "vue";
+import { computed, defineProps, onMounted, ref } from "vue";
 
 
 
@@ -40,8 +43,34 @@ const props = defineProps({
     }
 })
 
+onMounted(() => {
+  todayTransaction()
+})
 
+const todayTransactions = ref([])
+const noTransaction = ref(true)
 
+const todayTransaction = () => {
+   // Get today's date string for comparison
+  const today = new Date();
+  const todayDay = today.getDate().toString().padStart(2, '0');
+  const todayString = `${todayDay}`;
+
+props.transactions.forEach((transaction) => {
+
+  const date = new Date(transaction.timestamp);
+    const day = date.getDate().toString().padStart(2, '0'); // Add leading zero
+
+    // Create date string
+    let dateString = `${day}`;
+
+    // Check if the transaction date is today
+    if (dateString === todayString) {
+      todayTransactions.value.push(transaction);
+      noTransaction.value = false
+    }
+})
+}
 const formatTimestamp = (transactionTime) => {
   const dateObject = new Date(transactionTime);
   return dateObject.toLocaleDateString('en-US', {month: 'short', day: 'numeric'})
@@ -79,7 +108,6 @@ h2{
   padding: 10px;
   width: 100%;
 }
-
 .btn:focus,
 .delete-btn:focus {
   outline: 0;
@@ -148,5 +176,12 @@ h2{
 
 .list li:hover .delete-btn {
   opacity: 1;
+}
+.no-transactions h2{
+  padding: 0 0 0px 20px;
+  letter-spacing: 1px;
+  color: #183856;
+  font-style: italic;
+  font-size: 15px;
 }
 </style>

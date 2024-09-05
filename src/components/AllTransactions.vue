@@ -1,71 +1,138 @@
 <template>
-<div class="transaction">
-  <h3>Transaction History</h3>
-<div class="transaction-container" v-for="(transactions, date) in transactions" :key="date">
-    <h3>{{date}}</h3>
+  <div class="transaction">
+    <h3>Transaction History</h3>
 
-  <ul id="list" class="list">
-    <li
-      class="plus"
-      v-for="transaction in transactions"
-      :key="transaction.timestamp"
+    <div class="search-bar">
+      <Search :transactions="transactions" @search="handleSearch" />
+    </div>
+
+    <!-- searched transactions -->
+    <div
+      class="transaction-container"
+      v-for="(transactions, date) in transactions"
+      :key="date"
+    >
+
+      <ul id="list" class="list" v-if="searched">
+      <h3>{{ date }}</h3>
+        <li
+          class="plus"
+          v-for="transaction in transactions"
+          :key="transaction.timestamp"
+        >
+          <div id="list-container">
+            <img
+              :src="transaction.imageSrc"
+              alt=""
+              v-if="transaction.imageSrc"
+            />
+            <img
+              :src="transaction.category.image"
+              alt=""
+              v-if="transaction.category"
+            />
+
+            <span>
+              <h2>{{ transaction.text }}</h2>
+              <p>{{ formatTimestamp(transaction.transactionTime) }}</p>
+            </span>
+          </div>
+          <span
+            :class="transaction.incomeExpense == 'expense' ? 'minus' : 'plus'"
+            >${{ transaction.amount.toLocaleString() }}
+          </span>
+          <!-- <button @click="deleteTransaction(transaction.id)" class="delete-btn">x</button> -->
+        </li>
+      </ul>
+    </div>
+
+    <!-- all Transactions -->
+    <div
+      class="transaction-container"
+      v-for="(transactions, date) in transactions"
+      :key="date"
       
     >
-    <div id="list-container">
 
-    <img :src="transaction.imageSrc" alt="" v-if="transaction.imageSrc">
-          <img :src="transaction.category.image" alt="" v-if="transaction.category">
-        
-        <span>
-      <h2>{{ transaction.text }}</h2> 
-              <p>{{ formatTimestamp(transaction.transactionTime)}}</p>
+      <ul id="list" class="list" v-if="!searched">
+      <h3>{{ date }}</h3>
+        <li
+          class="plus"
+          v-for="transaction in transactions"
+          :key="transaction.timestamp"
+        >
+          <div id="list-container">
+            <img
+              :src="transaction.imageSrc"
+              alt=""
+              v-if="transaction.imageSrc"
+            />
+            <img
+              :src="transaction.category.image"
+              alt=""
+              v-if="transaction.category"
+            />
+
+            <span>
+              <h2>{{ transaction.text }}</h2>
+              <p>{{ formatTimestamp(transaction.transactionTime) }}</p>
+            </span>
+          </div>
+          <span
+            :class="transaction.incomeExpense == 'expense' ? 'minus' : 'plus'"
+            >${{ transaction.amount.toLocaleString() }}
           </span>
+        </li>
+      </ul>
     </div>
-      <span :class="transaction.incomeExpense == 'expense' ? 'minus' : 'plus'">${{ transaction.amount.toLocaleString() }}
-              </span>
-      <!-- <button @click="deleteTransaction(transaction.id)" class="delete-btn">x</button> -->
-    </li>
-  </ul>
-</div>
-</div>
+  </div>
 </template>
 
 <script setup>
-import { defineProps, computed } from "vue";
+import { defineProps, computed, ref } from "vue";
 import { transactionStore } from "../store/index";
+import Search from "./Search.vue";
 
-const emit = defineEmits(['transactionDeleted'])
 
-const store = transactionStore()
+const store = transactionStore();
+
+const searched = ref([]);
 
 const transactions = computed(() => {
   return store.groupedTransactions;
 });
 console.log(transactions.value);
 
-
 const formatTimestamp = (transactionTime) => {
-   const dateObject = new Date(transactionTime);
-  return dateObject.toLocaleDateString('en-US', {month: 'short', day: 'numeric'})
-  }
+  const dateObject = new Date(transactionTime);
+  return dateObject.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+  });
+};
 
-const deleteTransaction = (id) => {
-emit('transactionDeleted', id)
+
+const handleSearch = (search) => {
+  searched.value = search.value
+  console.log(search.value);
+  
 }
+console.log(searched.value);
+
 </script>
 <style scoped>
-.transaction{
+.transaction {
   padding-bottom: 40px;
 }
-.transaction-container{
+.transaction-container {
   margin: 40px 20px;
 }
-h3{
+h3 {
   padding: 0 0 0px 20px;
   letter-spacing: 1px;
   color: #183856;
 }
-h2{
+h2 {
   font-size: 20px;
   margin: 0;
 }
@@ -86,7 +153,7 @@ h2{
 .delete-btn:focus {
   outline: 0;
 }
-#list-container{
+#list-container {
   display: flex;
   width: 50%;
 }
@@ -96,7 +163,7 @@ h2{
   font-weight: 700;
   margin-top: 5px;
 }
-#list-container span{
+#list-container span {
   margin-left: 10px;
 }
 .list {
@@ -106,7 +173,7 @@ h2{
 }
 
 .list li {
-    box-shadow: 0 5px 50px 0 rgb(0 0 0 / 0.05);
+  box-shadow: 0 5px 50px 0 rgb(0 0 0 / 0.05);
   color: #333;
   height: 80px;
   display: flex;
@@ -116,7 +183,7 @@ h2{
   margin: 10px 0;
   border-radius: 10px;
 }
-.list li>span {
+.list li > span {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -126,20 +193,20 @@ h2{
   font-weight: 700;
   letter-spacing: 1px;
 }
-.list li>span>p {
+.list li > span > p {
   color: rgba(180, 178, 178, 0.7);
   font-size: 13px;
   font-weight: 700;
 }
-.list li>span.plus {
+.list li > span.plus {
   color: #2ecc71;
   font-weight: 700;
   letter-spacing: 1px;
 }
 
-.list li>span.minus {
+.list li > span.minus {
   color: #fd1900;
-    font-weight: 700;
+  font-weight: 700;
   letter-spacing: 1px;
 }
 

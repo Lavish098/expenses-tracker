@@ -55,6 +55,8 @@ const props = defineProps({
   width: 49%;
   border-radius: 10px;
   padding: 10px 0px 10px 10px;
+      /* box-shadow: 40px 100px 200px 100px rgba(31, 30, 30, 0.753), */
+
 }
 .income-section{
   display: flex;
@@ -62,6 +64,7 @@ const props = defineProps({
   /* justify-content: center; */
   margin-left: 5px;
   width: 30%;
+
 }
 .income-section h4 {
   font-size: 15px;

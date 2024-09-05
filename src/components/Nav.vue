@@ -26,8 +26,8 @@
           <router-link class="link" :to="{name: 'AllTransactions'}" @click="falseBubble">
             <i class="fas fa-receipt"></i><h3>History</h3>
           </router-link>
-           <router-link class="link" :to="{name: 'AllTransactions'}" @click="falseBubble">
-            <i class="fas fa-receipt"></i><h3>Overview</h3>
+           <router-link class="link" :to="{name: 'Overview'}" @click="falseBubble">
+            <i class="fas fa-chart-pie"></i><h3>Overview</h3>
           </router-link>
                       <!-- <router-link @click="toggleMobileNav" v-if="!user" class="link" :to="{name: 'Login'}">Login/Register</router-link> -->
         </ul>
