@@ -17,9 +17,8 @@
         <p>{{ formatTimestamp(transaction.transactionTime) }}</p>
     </span>
     </div>
-      <span :class="transaction.incomeExpense == 'expense' ? 'minus' : 'plus'">${{ transaction.amount.toLocaleString() }}
+      <span :class="transaction.incomeExpense == 'expense' ? 'minus' : 'plus'">{{ currencySymbol }}{{ transaction.amount.toLocaleString() }}
         </span>
-      <!-- <button @click="deleteTransaction(transaction.id)" class="delete-btn">x</button> -->
     </li>
   </ul>
   <div class="no-transactions" v-if="noTransaction">
@@ -76,9 +75,7 @@ const formatTimestamp = (transactionTime) => {
   return dateObject.toLocaleDateString('en-US', {month: 'short', day: 'numeric'})
   }
 
-const deleteTransaction = (id) => {
-emit('transactionDeleted', id)
-}
+const currencySymbol = computed(() => store.currencySymbol);
 
 
 </script>

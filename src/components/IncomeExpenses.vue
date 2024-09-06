@@ -6,7 +6,9 @@
       </div>
       <div class="income-section">
         <h4>Income</h4>
-        <p id="money-plus" class="money plus">${{ income.toLocaleString() }}</p>
+        <p id="money-plus" class="money plus">
+          {{ currencySymbol }}{{ income.toLocaleString() }}
+        </p>
       </div>
     </div>
     <div class="expense-container">
@@ -16,7 +18,7 @@
       <div class="expense-section">
         <h4>Expense</h4>
         <p id="money-minus" class="money minus">
-          ${{ expense.toLocaleString() }}
+          {{ currencySymbol }}{{ expense.toLocaleString() }}
         </p>
       </div>
     </div>
@@ -24,7 +26,10 @@
 </template>
 
 <script setup>
-import { defineProps } from "vue";
+import { defineProps, computed } from "vue";
+import { transactionStore } from '../store/index'
+
+const store = transactionStore()
 
 const props = defineProps({
   income: {
@@ -36,6 +41,7 @@ const props = defineProps({
     required: true,
   },
 });
+const currencySymbol = computed(() => store.currencySymbol);
 </script>
 <style scoped>
 .inc-exp-container {
@@ -55,23 +61,20 @@ const props = defineProps({
   width: 49%;
   border-radius: 10px;
   padding: 10px 0px 10px 10px;
-      /* box-shadow: 40px 100px 200px 100px rgba(31, 30, 30, 0.753), */
-
+  /* box-shadow: 40px 100px 200px 100px rgba(31, 30, 30, 0.753), */
 }
-.income-section{
+.income-section {
   display: flex;
   flex-wrap: wrap;
   /* justify-content: center; */
   margin-left: 5px;
   width: 30%;
-
 }
 .income-section h4 {
   font-size: 15px;
   margin-left: 5px;
   color: rgba(75, 240, 130, 0.596);
-    font-family: "Lato", sans-serif;
-
+  font-family: "Lato", sans-serif;
 }
 .income-container i {
   background-color: rgba(75, 240, 130, 0.596);
@@ -98,7 +101,7 @@ const props = defineProps({
   color: #ffffff;
   font-size: 20px;
 }
-.expense-section{
+.expense-section {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -126,7 +129,6 @@ const props = defineProps({
 .money.minus {
   color: black;
   font-size: 15px;
-    font-weight: bold;
-
+  font-weight: bold;
 }
 </style>

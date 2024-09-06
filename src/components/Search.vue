@@ -8,63 +8,21 @@
         @input="searchTransaction"
       />
     </div>
-    <div class="searchQuery" v-if="search">
-      <h2 v-for="search in searchQuery" :key="search.id">
-        {{ search.title }}
-      </h2>
-      <div class="item-error" v-if="searchQuery.length === 0">
-        <p>No result found</p>
-      </div>
-    </div>
   </div>
 </template>
 
 <script setup>
 import { ref, defineProps, computed, watch } from "vue";
 
-const props = defineProps({
-    transactions:{
-        type: Object,
-        required: true
-    }
-})
 const search = ref()
 
 const emit = defineEmits(['search'])
 
 
-  
-   const searchQuery = computed(() => {
-  if (search.value) {
-    // Create an empty array to hold the filtered results
-    let filteredResults = [];
-
-    // Iterate over each date group in the transactions object
-    Object.values(props.transactions).forEach((transactionArray) => {
-      // Filter transactions within each date group
-      const filteredArray = transactionArray.filter((item) => {
-        return search.value
-          .toLowerCase()
-          .split(" ")
-          .every((v) => item.text.toLowerCase().includes(v));
-      });
-
-      // Add filtered transactions to the results
-      filteredResults = [...filteredResults, ...filteredArray];
-    });
-
-    return filteredResults;
-  } else {
-    // If no search query, flatten all transaction arrays into one array
-    return Object.values(props.transactions).flat();
-  }
-});
-
 const searchTransaction = () => {
-emit('search', searchQuery)
+emit('search', search.value)
 }
 
-    watch(search, searchTransaction);
 
 </script>
 

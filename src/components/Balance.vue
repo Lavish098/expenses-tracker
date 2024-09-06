@@ -1,8 +1,11 @@
 <template>
 <div class="balance">
     <div class="balance-container">
+      <div id="balance">
     <h4>Total Balance</h4>
-      <h1 id="balance">${{ total.toLocaleString() }}</h1>
+    <Currency />
+      </div>
+      <h1 id="balance">{{ currencySymbol }}{{ total.toLocaleString() }}</h1>
     </div>
           <IncomeExpenses :income="+income" :expense="+expense" />
 </div>
@@ -10,7 +13,9 @@
 
 <script setup>
 import {defineProps, computed} from 'vue'
+import Currency from "./currency.vue"
 import IncomeExpenses from "../components/IncomeExpenses.vue";
+import { transactionStore } from "../store/index"
 
 
 const props = defineProps({
@@ -20,6 +25,11 @@ const props = defineProps({
     }
     
 })
+
+const store = transactionStore()
+
+const currencySymbol = computed(() => store.currencySymbol);
+
 //get total
 const total = computed(() => {
   const income = props.transactions
@@ -65,6 +75,10 @@ const expense = computed(() => {
 }
 .balance-container{
     margin: 10px;
+}
+#balance{
+  display: flex;
+  justify-content: space-between;
 }
 .balance h4{
         font-family: "Lato", sans-serif;

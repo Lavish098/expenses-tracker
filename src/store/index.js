@@ -3,8 +3,20 @@ import { defineStore } from "pinia";
 export const transactionStore = defineStore("transactions", {
   state: () => ({
     transactions: [],
+    selectedCountry: 'USA', // Default country
+    currencySymbols: {
+      "USA": "$",
+      "UK": "£",
+      "EU": "€",
+      "Japan": "¥",
+      "India": "₹",
+      "Ngn": "N"
+    },
   }),
   getters: {
+    currencySymbol(state) {
+      return state.currencySymbols[state.selectedCountry] || "$"; // Default to dollar if not found
+    },
     allTransactions: (state) => {      
       return state.transactions.sort((a, b) => b.timestamp - a.timestamp);
     },
@@ -52,6 +64,11 @@ export const transactionStore = defineStore("transactions", {
     }
   },
   actions: {
+    changeCountry(country) {
+      this.selectedCountry = country;
+      this.saveCurrency();
+
+    },
     handleTransactionSubmitted(transactionData) {
       // Add the transaction to the state
       this.transactions.push({
@@ -69,6 +86,9 @@ export const transactionStore = defineStore("transactions", {
     saveTransaction() {
       localStorage.setItem("transactions", JSON.stringify(this.transactions));
     },
+    saveCurrency() {
+      localStorage.setItem("currency", JSON.stringify(this.selectedCountry));
+    },
 
     /**
      * Load transactions from local storage when the store is initialized
@@ -85,6 +105,17 @@ export const transactionStore = defineStore("transactions", {
       }
 
       console.log(savedTransactions);
+      
+    },
+    loadCurrency() {
+      const savedCurrency = JSON.parse(
+        localStorage.getItem("currency")
+      );
+      if (savedCurrency) {
+        this.selectedCountry = savedCurrency
+      }
+
+      console.log(savedCurrency);
       
     },
     generateUniqueId() {

@@ -17,6 +17,7 @@ const store = transactionStore();
 
 onMounted(() => {
   store.loadTransactions();
+  store.loadCurrency()
 });
 
 
