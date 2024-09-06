@@ -30,6 +30,7 @@
 
 <script setup>
 import { computed, defineProps, onMounted, ref } from "vue";
+import { transactionStore} from '../store/index'
 
 
 
@@ -42,6 +43,7 @@ const props = defineProps({
     }
 })
 
+const store = transactionStore()
 onMounted(() => {
   todayTransaction()
 })
