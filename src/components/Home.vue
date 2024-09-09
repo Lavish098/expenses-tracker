@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="home-container">
         <Header />
     <Balance :transactions="transactions" />
     <TransactionList

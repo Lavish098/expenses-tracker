@@ -7,7 +7,7 @@
       <div class="income-section">
         <h4>Income</h4>
         <p id="money-plus" class="money plus">
-          {{ currencySymbol }}{{ income.toLocaleString() }}
+          {{ formatCurrency(income, currencySymbol) }}
         </p>
       </div>
     </div>
@@ -18,7 +18,7 @@
       <div class="expense-section">
         <h4>Expense</h4>
         <p id="money-minus" class="money minus">
-          {{ currencySymbol }}{{ expense.toLocaleString() }}
+          {{ formatCurrency(expense, currencySymbol) }}
         </p>
       </div>
     </div>
@@ -42,6 +42,24 @@ const props = defineProps({
   },
 });
 const currencySymbol = computed(() => store.currencySymbol);
+
+const formatCurrency = (amount, currencyCode) => {
+  const formatter = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: currencyCode,
+    currencyDisplay: "narrowSymbol",
+    minimumFractionDigits: 0, 
+    maximumFractionDigits: 2  
+  });
+
+  const formattedAmount = formatter.format(amount);
+
+  if (Math.floor(amount) === amount) {
+    return formattedAmount.replace(/\.00$/, '');
+  } else {
+    return formattedAmount;
+  }
+};
 </script>
 <style scoped>
 .inc-exp-container {

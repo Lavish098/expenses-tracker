@@ -40,7 +40,8 @@
           </div>
           <span
             :class="transaction.incomeExpense == 'expense' ? 'minus' : 'plus'"
-            >{{ currencySymbol}}{{ transaction.amount.toLocaleString() }}
+            >
+            {{ formatCurrency(transaction.amount, currencySymbol)}}
           </span>
         </li>
       </ul>
@@ -122,6 +123,24 @@ const formatTimestamp = (transactionTime) => {
 };
 
 const currencySymbol = computed(() => store.currencySymbol);
+
+const formatCurrency = (amount, currencyCode) => {
+  const formatter = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: currencyCode,
+    currencyDisplay: "narrowSymbol",
+    minimumFractionDigits: 0, 
+    maximumFractionDigits: 2  
+  });
+
+  const formattedAmount = formatter.format(amount);
+
+  if (Math.floor(amount) === amount) {
+    return formattedAmount.replace(/\.00$/, '');
+  } else {
+    return formattedAmount;
+  }
+};
 
 </script>
 <style scoped>

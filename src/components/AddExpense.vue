@@ -16,16 +16,16 @@
           <label for="amount">Amount Spent</label>
           <input
             v-model="amount"
-            type="text"
+            type="number"
             id="amount"
             placeholder="Enter amount..."
+            step="0.01"
           />
         </div>
         <div>
           <CDatePicker
             v-model:date="date"
             label="Date"
-            timepicker
           />
         </div>
         <div class="category-list">
@@ -101,7 +101,7 @@ console.log(category.value);
 
 
 const handleTransactionSubmitted = () => {
-  if (!text.value || !amount.value) {
+  if (!text.value || !amount.value || !category.value) {
     toast.error("Both fields must be filled");
     return;
   }

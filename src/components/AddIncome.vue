@@ -11,9 +11,10 @@
           <label for="amount">How much did you recieve?</label>
           <input
             v-model="amount"
-            type="text"
+            type="number"
             id="amount"
             placeholder="Enter amount..."
+            step="0.01"
           />
         </div>
         <div class="form-content">
@@ -30,7 +31,6 @@
           <CDatePicker
             v-model:date="date"
             label="Date"
-            timepicker
           />
         </div>
 
@@ -66,7 +66,7 @@ const router = useRouter();
 const store = transactionStore();
 
 const handleTransactionSubmitted = () => {
-  if (!text.value || !amount.value) {
+  if (!text.value || !amount.value || !description.value) {
     toast.error("Both fields must be filled");
     return;
   }

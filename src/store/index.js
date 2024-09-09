@@ -5,17 +5,17 @@ export const transactionStore = defineStore("transactions", {
     transactions: [],
     selectedCountry: 'USA', // Default country
     currencySymbols: {
-      "USA": "$",
-      "UK": "£",
-      "EU": "€",
-      "Japan": "¥",
-      "India": "₹",
-      "Ngn": "N"
+      "USA": "USD",
+      "UK": "GBP",
+      "EU": "EUR",
+      "Japan": "JPY",
+      "India": "INR",
+      "Nigeria": "NGN"
     },
   }),
   getters: {
     currencySymbol(state) {
-      return state.currencySymbols[state.selectedCountry] || "$"; // Default to dollar if not found
+      return state.currencySymbols[state.selectedCountry] || "USD"; // Default to dollar if not found
     },
     allTransactions: (state) => {      
       return state.transactions.sort((a, b) => b.timestamp - a.timestamp);

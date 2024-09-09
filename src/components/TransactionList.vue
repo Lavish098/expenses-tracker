@@ -1,66 +1,66 @@
 <template>
-<div class="transaction-container">
-  <h3>Latest Transactions</h3>
-  <ul class="list">
-    <li
-      class="plus"
-      v-for="transaction in todayTransactions.slice(0, 5)"
-      :key="transaction.id"
-      
-    >
-    <div id="list-container">
-    <img :src="transaction.imageSrc" alt="" v-if="transaction.imageSrc">
-        <img :src="transaction.category.image" alt="" v-if="transaction.category">
+  <div class="transaction-container">
+    <h3>Latest Transactions</h3>
+    <ul class="list">
+      <li
+        class="plus"
+        v-for="transaction in todayTransactions.slice(0, 5)"
+        :key="transaction.id"
+      >
+        <div id="list-container">
+          <img :src="transaction.imageSrc" alt="" v-if="transaction.imageSrc" />
+          <img
+            :src="transaction.category.image"
+            alt=""
+            v-if="transaction.category"
+          />
 
-    <span>
-      <h2>{{ transaction.text }}</h2> 
-        <p>{{ formatTimestamp(transaction.transactionTime) }}</p>
-    </span>
-    </div>
-      <span :class="transaction.incomeExpense == 'expense' ? 'minus' : 'plus'">{{ currencySymbol }}{{ transaction.amount.toLocaleString() }}
+          <span>
+            <h2>{{ transaction.text }}</h2>
+            <p>{{ formatTimestamp(transaction.transactionTime) }}</p>
+          </span>
+        </div>
+        <span :class="transaction.incomeExpense == 'expense' ? 'minus' : 'plus'"
+          >{{ formatCurrency(transaction.amount, currencySymbol) }}
         </span>
-    </li>
-  </ul>
-  <div class="no-transactions" v-if="noTransaction">
-    <h2>No transaction added for today</h2>
+      </li>
+    </ul>
+    <div class="no-transactions" v-if="noTransaction">
+      <h2>No transaction added for today</h2>
+    </div>
   </div>
-</div>
-
 </template>
 
 <script setup>
 import { computed, defineProps, onMounted, ref } from "vue";
-import { transactionStore} from '../store/index'
+import { transactionStore } from "../store/index";
 
-
-
-const emit = defineEmits(['transactionDeleted'])
+const emit = defineEmits(["transactionDeleted"]);
 
 const props = defineProps({
-    transactions:{
-        type: Array,
-        required: true
-    }
-})
+  transactions: {
+    type: Array,
+    required: true,
+  },
+});
 
-const store = transactionStore()
+const store = transactionStore();
 onMounted(() => {
-  todayTransaction()
-})
+  todayTransaction();
+});
 
-const todayTransactions = ref([])
-const noTransaction = ref(true)
+const todayTransactions = ref([]);
+const noTransaction = ref(true);
 
 const todayTransaction = () => {
-   // Get today's date string for comparison
+  // Get today's date string for comparison
   const today = new Date();
-  const todayDay = today.getDate().toString().padStart(2, '0');
+  const todayDay = today.getDate().toString().padStart(2, "0");
   const todayString = `${todayDay}`;
 
-props.transactions.forEach((transaction) => {
-
-  const date = new Date(transaction.timestamp);
-    const day = date.getDate().toString().padStart(2, '0'); // Add leading zero
+  props.transactions.forEach((transaction) => {
+    const date = new Date(transaction.timestamp);
+    const day = date.getDate().toString().padStart(2, "0"); // Add leading zero
 
     // Create date string
     let dateString = `${day}`;
@@ -68,30 +68,49 @@ props.transactions.forEach((transaction) => {
     // Check if the transaction date is today
     if (dateString === todayString) {
       todayTransactions.value.push(transaction);
-      noTransaction.value = false
+      noTransaction.value = false;
     }
-})
-}
+  });
+};
 const formatTimestamp = (transactionTime) => {
   const dateObject = new Date(transactionTime);
-  return dateObject.toLocaleDateString('en-US', {month: 'short', day: 'numeric'})
-  }
+  return dateObject.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+  });
+};
 
 const currencySymbol = computed(() => store.currencySymbol);
 
+const formatCurrency = (amount, currencyCode) => {
+  const formatter = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: currencyCode,
+    currencyDisplay: "narrowSymbol",
+    minimumFractionDigits: 0, 
+    maximumFractionDigits: 2  
+  });
 
+  const formattedAmount = formatter.format(amount);
+
+  if (Math.floor(amount) === amount) {
+    return formattedAmount.replace(/\.00$/, '');
+  } else {
+    return formattedAmount;
+  }
+};
 </script>
 <style scoped>
-.transaction-container{
+.transaction-container {
   margin: 40px 20px;
   padding-bottom: 30px;
 }
-h3{
+h3 {
   padding: 0 0 0px 20px;
   letter-spacing: 1px;
   color: #183856;
 }
-h2{
+h2 {
   font-size: 20px;
   margin: 0;
 }
@@ -111,7 +130,7 @@ h2{
 .delete-btn:focus {
   outline: 0;
 }
-#list-container{
+#list-container {
   display: flex;
   width: 50%;
 }
@@ -123,7 +142,7 @@ h2{
 }
 
 .list li {
-    border: 1px solid rgba(180, 178, 178, 0.4);
+  border: 1px solid rgba(180, 178, 178, 0.4);
   color: #333;
   height: 80px;
   display: flex;
@@ -133,7 +152,7 @@ h2{
   border-radius: 10px;
 }
 
-.list li>span {
+.list li > span {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -149,12 +168,12 @@ h2{
   font-weight: 700;
   margin-top: 5px;
 }
-#list-container span{
+#list-container span {
   margin-left: 10px;
 }
-.list li>span.minus {
+.list li > span.minus {
   color: #fd1900;
-    font-weight: 700;
+  font-weight: 700;
   letter-spacing: 1px;
 }
 .delete-btn {
@@ -176,7 +195,7 @@ h2{
 .list li:hover .delete-btn {
   opacity: 1;
 }
-.no-transactions h2{
+.no-transactions h2 {
   padding: 0 0 0px 20px;
   letter-spacing: 1px;
   color: #183856;

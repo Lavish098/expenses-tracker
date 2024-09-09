@@ -32,9 +32,9 @@ const showBubble = () => {
 <style scoped>
 .chat {
   width: 100%;
-  right: 17%;
+  right: 19%;
   position: fixed;
-  bottom: 11%;
+  bottom: 11.5%;
   z-index: 9999;
 }
 .messages {
@@ -45,6 +45,7 @@ const showBubble = () => {
 .message {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   border-radius: 20px;
   width: 70%;
   padding: 8px 15px;
@@ -52,7 +53,7 @@ const showBubble = () => {
   margin-bottom: 5px;
 }
 .mine {
-  align-items: flex-end;
+  align-items: center;
 }
 h4 {
   font-size: 12px;
@@ -65,6 +66,7 @@ h4 {
   text-decoration: none;
   color: white;
   cursor: pointer;
+  margin-bottom: -5px;
 }
 .expense {
   display: flex;
@@ -74,6 +76,7 @@ h4 {
   text-decoration: none;
   color: white;
   cursor: pointer;
+    margin-bottom: -5px;
 }
 .mine .message {
   color: white;

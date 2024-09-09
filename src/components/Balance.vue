@@ -5,7 +5,7 @@
     <h4>Total Balance</h4>
     <Currency />
       </div>
-      <h1 id="balance">{{ currencySymbol }}{{ total.toLocaleString() }}</h1>
+      <h1 id="balance">{{ formatCurrency(total, currencySymbol) }}</h1>
     </div>
           <IncomeExpenses :income="+income" :expense="+expense" />
 </div>
@@ -30,6 +30,23 @@ const store = transactionStore()
 
 const currencySymbol = computed(() => store.currencySymbol);
 
+const formatCurrency = (amount, currencyCode) => {
+  const formatter = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: currencyCode,
+    currencyDisplay: "narrowSymbol",
+    minimumFractionDigits: 0, 
+    maximumFractionDigits: 2  
+  });
+
+  const formattedAmount = formatter.format(amount);
+
+  if (Math.floor(amount) === amount) {
+    return formattedAmount.replace(/\.00$/, '');
+  } else {
+    return formattedAmount;
+  }
+};
 //get total
 const total = computed(() => {
   const income = props.transactions
@@ -79,6 +96,7 @@ const expense = computed(() => {
 #balance{
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 .balance h4{
         font-family: "Lato", sans-serif;
