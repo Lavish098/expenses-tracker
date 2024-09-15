@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">expendi</string>
+    <string name="title_activity_main">expendi</string>
+    <string name="package_name">com.expendi.app</string>
+    <string name="custom_url_scheme">com.expendi.app</string>
+</resources>

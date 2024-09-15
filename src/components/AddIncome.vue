@@ -78,6 +78,7 @@ const handleTransactionSubmitted = () => {
     amount: parseFloat(amount.value),
     incomeExpense: incomeExpense.value,
     imageSrc: imageName,
+    category: {name: text.value}
   });
 
   toast.success("Transaction added");

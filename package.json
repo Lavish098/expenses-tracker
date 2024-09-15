@@ -9,12 +9,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@capacitor/android": "^6.1.2",
+    "@capacitor/cli": "^6.1.2",
+    "@capacitor/core": "^6.1.2",
     "@coreui/coreui": "^5.1.2",
     "@coreui/coreui-pro": "^5.4.1",
     "@coreui/vue": "^5.3.0",
     "@coreui/vue-pro": "^5.4.0",
     "@vuepic/vue-datepicker": "^9.0.2",
-    "flatpickr": "^4.6.13",
+    "chart.js": "^4.4.4",
     "pinia": "^2.2.2",
     "vue": "^3.4.29",
     "vue-datepicker-ui": "^3.1.1",
