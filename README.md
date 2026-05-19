@@ -1,14 +1,17 @@
-# expenses-tracker
+# Expendi
 
-This template should help get you started developing with Vue 3 in Vite.
+A modern personal finance app built with Next.js, Tailwind CSS, Recharts, and local-first storage.
 
-## Recommended IDE Setup
+## Features
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+- Dashboard with balance, income, expenses, savings rate, spending mix, and money insights
+- Add and edit income or expense transactions
+- Search, filter, duplicate, delete, import, and export transactions
+- Category budgets with progress tracking
+- Reports for income vs expense and top spending categories
+- Savings goals
+- Recurring transaction overview
+- Dark mode, privacy mode, responsive desktop/mobile navigation
 
 ## Project Setup
 
@@ -16,13 +19,13 @@ See [Vite Configuration Reference](https://vitejs.dev/config/).
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+## Development
 
 ```sh
 npm run dev
 ```
 
-### Compile and Minify for Production
+## Production Build
 
 ```sh
 npm run build

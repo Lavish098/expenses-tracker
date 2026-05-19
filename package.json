@@ -4,29 +4,21 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "dev": "next dev --webpack",
+    "build": "next build",
+    "start": "serve out"
   },
   "dependencies": {
-    "@capacitor/android": "^6.1.2",
-    "@capacitor/cli": "^6.1.2",
-    "@capacitor/core": "^6.1.2",
-    "@coreui/coreui": "^5.1.2",
-    "@coreui/coreui-pro": "^5.4.1",
-    "@coreui/vue": "^5.3.0",
-    "@coreui/vue-pro": "^5.4.0",
-    "@vuepic/vue-datepicker": "^9.0.2",
-    "chart.js": "^4.4.4",
-    "pinia": "^2.2.2",
-    "vue": "^3.4.29",
-    "vue-datepicker-ui": "^3.1.1",
-    "vue-flatpickr-component": "^11.0.5",
-    "vue-router": "^4.4.3",
-    "vue-toastification": "^2.0.0-rc.5"
+    "lucide-react": "^1.16.0",
+    "next": "^16.2.6",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
+    "recharts": "^3.8.1"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^5.0.5",
-    "vite": "^5.3.1"
+    "autoprefixer": "^10.5.0",
+    "postcss": "^8.5.15",
+    "serve": "^14.2.5",
+    "tailwindcss": "^3.4.17"
   }
 }
